@@ -9,7 +9,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { InputOTP } from "@/components/ui/input-otp";
-import { supabase } from "@/supabase/supabase";
 
 const loginSchema = z.object({
   firstname: z.string().min(1, "First Name is required"),
@@ -27,7 +26,6 @@ export default function LoginPage() {
     handleSubmit,
     formState: { errors },
     setValue,
-    getValues,
   } = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -35,18 +33,7 @@ export default function LoginPage() {
     },
   });
 
-  const onSubmit = async (loginData: LoginSchema) => {
-    const { data, error } = await supabase.auth.signUp({
-      email: loginData.email,
-      password: loginData.pwd,
-    });
-
-    if (error) {
-      console.error(error);
-    }
-
-    console.log(data);
-  };
+  const onSubmit = async () => {};
 
   const handleReferralChange = (value: string) => {
     setValue("referral", value);
